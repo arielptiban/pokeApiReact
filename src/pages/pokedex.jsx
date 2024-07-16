@@ -2,7 +2,7 @@ import React from 'react';
 import { Content, Button, ButtonContainer } from './Pokedex';
 import { useState, useEffect } from 'react';
 import { getData, getInfo } from '../services/api';
-import { Col, Row, Card, Pagination } from 'antd';
+import { Col, Row, Card } from 'antd';
 
 
 
@@ -14,8 +14,8 @@ const pokedex = () => {
     const [hab, setHab] = useState([]);
     const [poke, setPoke] = useState('');
     const [page, setPage] = useState({});
+    const urlInit = 'https://pokeapi.co/api/v2/pokemon/';
 
-    const urlInit = 'https://pokeapi.co/api/v2/pokemon/'
 
     useEffect(() => {
         getData(urlInit).then((data) => {
@@ -32,13 +32,13 @@ const pokedex = () => {
         })
     }
 
-
     const handleNext = () => {
         getData(page.next).then((data) => {
             setResults(data.results);
             setPage(data);
         })
     }
+
     const handlePrev = () => {
         getData(page.previous).then((data) => {
             setResults(data.results);
@@ -47,6 +47,8 @@ const pokedex = () => {
     }
 
     return (
+
+
         <Content>
             <ButtonContainer>
                 {
@@ -60,19 +62,22 @@ const pokedex = () => {
 
             <Row>
                 {
-                    result.map((item, index) =>
-                    (
-                        <Col xs={6} key={index}>
-                            <Card
-                                hoverable
-                                style={{ width: 'auto', margin: '1rem', textAlign: 'center' }}
-                                onClick={() => { handleClick(item.name) }}
-                            >
-                                <Meta title={item.name}></Meta>
-                            </Card>
-                        </Col>
+                    result.map((item, index) => {
 
-                    ))
+                        return (
+                            <Col xs={6} key={index}>
+                                <Card
+                                    hoverable
+                                    style={{ width: '256px', margin: '1rem', textAlign: 'center' }}
+                                    onClick={() => { handleClick(item.name) }}
+                                >
+                                    <Meta title={item.name}></Meta>
+                                </Card>
+                            </Col>
+
+                        )
+                    }
+                    )
                 }
             </Row>
 

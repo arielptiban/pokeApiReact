@@ -1,16 +1,48 @@
-import { Link } from "react-router-dom";
-import { Content, Button } from './HomeStyle';
+import { Content } from './HomeStyle';
+import { useEffect, useState } from "react";
+import { getRandom } from '../services/api';
+import { Card } from 'antd';
+const { Meta } = Card
+
+const Home = () => {
+
+    const [results, setResults] = useState([]);
+
+    const pokeRandom = () => {
+        const random = Math.floor(Math.random() * 151) + 1;
+        getRandom(random).then((data) => {
+            if (data) {
+                setResults(data)
+            }
+        })
+    }
+
+    useEffect(() => {
+        pokeRandom()
+    }, [])
+
+    return (
+        <>
+            <Content>
+
+                <Card
+                    hoverable
+                    style={{ width: '256px', margin: '1rem', textAlign: 'center' }}
+                    cover={<img alt="example" src={results.sprites?.other['official-artwork'].front_default} />}
+                >
+                    <Meta title={results.name} />
+                </Card>
+
+                <button
+                    onClick={pokeRandom}
+                >
+                    Obtener random
+                </button>
 
 
-const Home = () => (
-    <Content>
-        <h1>Examen REACT</h1>
-        <p>Este es el examen de React - Consumir API Pokemon</p>
-        <Button to="/pokedex">
-            Acceder
-        </Button>
-
-    </Content>
-)
+            </Content>
+        </>
+    )
+}
 
 export default Home;

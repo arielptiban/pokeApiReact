@@ -16,3 +16,14 @@ export const getInfo = async (poke) => {
     }
 
 }
+export const getRandom = async (poke) => {
+    try {
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon/' + poke);
+        return response.data
+    }
+    catch (error) {
+        console.log(error)
+        return []
+    }
+
+}

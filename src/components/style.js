@@ -12,7 +12,7 @@ export const ContentStyle = styled.div`
     justify-content: 'center',
     margin: 0 auto;
     width: auto;
-    height: 100vh;
+    height: auto;
     background-color: transparent;
     border-radius: 10px;
     margin-top: 20px;
